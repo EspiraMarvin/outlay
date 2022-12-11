@@ -16,7 +16,8 @@ export default function IconButton({ icon, color, size, onPress, style }) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    margin: 8,
+    marginHorizontal: 8,
+    marginVertical: 2,
   },
   pressed: {
     opacity: 0.5,

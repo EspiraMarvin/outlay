@@ -19,9 +19,9 @@ export default function ExpenseItem({ id, description, date, amount }) {
 
   return (
     <Pressable
-      style={({ pressed }) => [pressed ? styles.buttonPressed : null]}
+      style={({ pressed }) => [pressed ? styles.pressed : null]}
       onPress={() => goToSpecificExpense()}
-      android_ripple={{ color: "red" }}
+      //   android_ripple={{ color: "#ccc" }}
     >
       <View style={styles.expenseItem}>
         <View style={styles.leftItems}>
@@ -37,6 +37,9 @@ export default function ExpenseItem({ id, description, date, amount }) {
 }
 
 const styles = StyleSheet.create({
+  pressed: {
+    opacity: 0.6,
+  },
   expenseItem: {
     padding: 12,
     flexDirection: "row",
@@ -75,7 +78,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   button: { flex: 1 },
-  buttonPressed: {
-    opacity: 0.6,
-  },
 })

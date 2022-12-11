@@ -5,7 +5,7 @@ export default function ManageExpenseScreen({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>ManageExpenseScreen - {route.params.id}</Text>
+      <Text style={styles.text}>ManageExpenseScreen</Text>
     </View>
   )
 }

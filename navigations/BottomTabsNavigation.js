@@ -14,11 +14,9 @@ const Stack = createNativeStackNavigator()
 const BottomTab = createBottomTabNavigator()
 
 function ExpensesOverview() {
-  const goToManageExpenseScreen = () => {}
-
   return (
     <BottomTab.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: "white",
         tabBarActiveTintColor: GlobalStyles.colors.primary500,
@@ -30,18 +28,19 @@ function ExpensesOverview() {
         tabBarLabelPosition: "below-icon",
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
         tabBarLabelStyle: [styles.tabBarLabel],
-        headerRight: () => {
+        headerRight: ({ tintColor }) => {
+          // tintColor prop is gotten from headerTintColor property above, that is set to white
           return (
             <IconButton
               icon="add"
-              onPress={goToManageExpenseScreen}
-              color="white"
+              onPress={() => navigation.navigate("ManageExpense")}
+              color={tintColor}
               size={24}
               style={{ paddingRight: 10 }}
             />
           )
         },
-      }}
+      })}
     >
       <BottomTab.Screen
         name="RecentExpenses"
