@@ -14,7 +14,7 @@ export default function ExpenseItem({ id, description, date, amount }) {
       date,
       amount,
     }
-    navigation.navigate("ManageExpense", { id: item.id, item: item })
+    navigation.navigate("ManageExpense", { expenseId: item.id })
   }
 
   return (

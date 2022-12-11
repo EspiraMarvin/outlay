@@ -1,14 +1,14 @@
 import { StatusBar } from "expo-status-bar"
 import { StyleSheet, Text, View } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
-import BottomTabsNavigation from "./navigations/BottomTabsNavigation"
+import AppNavigation from "./navigations/AppNavigation"
 
 export default function App() {
   return (
     <>
       <StatusBar style="light" backgroundColor="black" />
       <NavigationContainer>
-        <BottomTabsNavigation />
+        <AppNavigation />
       </NavigationContainer>
     </>
   )

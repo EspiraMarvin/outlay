@@ -78,20 +78,16 @@ function ExpensesOverview() {
   )
 }
 
-export default function BottomTabsNavigation() {
+export default function AppNavigation() {
   return (
     <Stack.Navigator
       screenOptions={{
         headerTintColor: "white",
-        headerStyle: { backgroundColor: "#3c0a6b" },
-        headerTitleStyle: {
-          color: "white",
-          fontWeight: "bold",
-        },
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
       }}
     >
       <Stack.Screen
-        name="ExpenseOverview"
+        name="ExpensesOverview"
         component={ExpensesOverview}
         options={{
           animation: "fade_from_bottom",
@@ -104,7 +100,7 @@ export default function BottomTabsNavigation() {
         name="ManageExpense"
         component={ManageExpenseScreen}
         options={{
-          title: "Manage Expense",
+          presentation: "modal",
         }}
       />
     </Stack.Navigator>
