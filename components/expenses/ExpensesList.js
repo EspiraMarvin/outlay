@@ -25,6 +25,6 @@ export default function ExpensesList({ expenses }) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    backgroundColor: GlobalStyles.colors.primary700,
+    backgroundColor: GlobalStyles.colors.primary800,
   },
 })

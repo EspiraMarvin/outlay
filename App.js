@@ -2,14 +2,17 @@ import { StatusBar } from "expo-status-bar"
 import { StyleSheet } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import AppNavigation from "./navigations/AppNavigation"
+import ExpenseContextProvider from "./store/context/expenses-context"
 
 export default function App() {
   return (
     <>
       <StatusBar style="light" backgroundColor="black" />
-      <NavigationContainer>
-        <AppNavigation />
-      </NavigationContainer>
+      <ExpenseContextProvider>
+        <NavigationContainer>
+          <AppNavigation />
+        </NavigationContainer>
+      </ExpenseContextProvider>
     </>
   )
 }

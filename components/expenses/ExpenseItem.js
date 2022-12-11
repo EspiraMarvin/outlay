@@ -21,7 +21,6 @@ export default function ExpenseItem({ id, description, date, amount }) {
     <Pressable
       style={({ pressed }) => [pressed ? styles.pressed : null]}
       onPress={() => goToSpecificExpense()}
-      //   android_ripple={{ color: "#ccc" }}
     >
       <View style={styles.expenseItem}>
         <View style={styles.leftItems}>
