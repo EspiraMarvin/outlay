@@ -5,6 +5,7 @@ import IconButton from "../components/ui/IconButton"
 import { GlobalStyles } from "../constants/styles"
 
 import { ExpenseContext } from "../store/context/expenses-context"
+import { storeExpense } from "../store/context/http"
 
 export default function ManageExpenseScreen({ route, navigation }) {
   const { expenses, addExpense, updateExpense, deleteExpense } =
@@ -33,6 +34,7 @@ export default function ManageExpenseScreen({ route, navigation }) {
     if (isEditting) {
       updateExpense(editedExpenseId, expenseData)
     } else {
+      storeExpense(expenseData)
       addExpense(expenseData)
     }
     navigation.goBack()
