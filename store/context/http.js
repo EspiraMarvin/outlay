@@ -24,16 +24,15 @@ export async function fetchExpenses() {
     }
     expenses.push(expenseObj)
   }
-  console.log("expenses data", expenses)
 
   return expenses
 }
 
-export function updateExpense(id, expenseData) {
+export function updateExpenseFirebase(id, expenseData) {
   return axios.put(`${APP_URL}/expenses/${id}.json`, expenseData)
 }
 
-export function deleteExpense(id) {
+export function deleteExpenseFirebase(id) {
   return axios.delete(`${APP_URL}/expenses/${id}.json`)
 }
 

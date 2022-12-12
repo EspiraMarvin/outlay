@@ -23,7 +23,6 @@ export default function RecentExpenseScreen() {
 
     // get dates from today and the last 7 days
     const date7daysAgo = getDateMinusDays(today, 7)
-    // console.log("boolean", expense.date >= date7daysAgo)
 
     // return expense.date >= date7daysAgo
     return expense.date <= today && expense.date > date7daysAgo
