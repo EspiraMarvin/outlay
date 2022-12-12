@@ -1,42 +1,58 @@
-import { createContext, useState } from "react"
+import { createContext, useState, useReducer } from "react"
 import { EXPENSES } from "../../data/expenses"
 
 export const ExpenseContext = createContext({
   expenses: [],
-  addExpense: (expense) => {},
-  updateExpense: (expense, id) => {},
+  addExpense: ({ description, amount, date }) => {},
+  updateExpense: (id, { description, amount, date }) => {},
   deleteExpense: (id) => {},
 })
 
-const ExpenseContextProvider = ({ children }) => {
-  //   const [expenses, setExpenses] = useState([])
-  const [expenses, setExpenses] = useState(EXPENSES)
+function expensesReducer(state, action) {
+  switch (action.type) {
+    case "ADD":
+      console.log("expenses data to add", action.payload.expenseData)
+      // return [action.payload.expenseData, ...expensesState]
+      return [{ ...action.payload }, state]
+    case "UPDATE":
+      const updateExpenseIndex = state.findIndex(
+        (expense) => expense.id === action.payload.id
+      ) // find index to update
+      const updatableExpense = state[updateExpenseIndex] // find item to update by index
+      const updatedItem = { ...updatableExpense, ...action.payload.data } // create new updated item
+      const updatedExpenses = [...state]
+      updatableExpense[updateExpenseIndex] = updatedItem // update item
+      // const updatedExpenses = [...state]
+      return updatedExpenses
+    case "DELETE":
+      return state.filter((expense) => expense.id !== action.payload)
+    default:
+      return state
+  }
+}
 
-  const addExpense = (expense) => {
-    setExpenses((currExpenses) => [expense, ...currExpenses])
+const ExpenseContextProvider = ({ children }) => {
+  const [expensesState, dispatch] = useReducer(expensesReducer, EXPENSES)
+
+  const addExpense = (expenseData) => {
+    const id = Math.floor(Math.random() * 100) // gen random id
+    expenseData.id = id
+    dispatch({ type: "ADD", payload: expenseData })
   }
 
-  const updateExpense = (payload, id) => {
-    setExpenses((currExpenses) =>
-      currExpenses.map((expense) => {
-        if (expense.id == id) {
-          return (expense = payload)
-        }
-      })
-    )
+  const updateExpense = (id, expenseData) => {
+    dispatch({ type: "UPDATE", payload: { id: id, data: expenseData } })
   }
 
   const deleteExpense = (id) => {
-    // setExpenses((prevExp) => filter())
-    // expenses.filter((expense) => expense.id !== id)
-    setExpenses((currExpenses) => currExpenses.filter((exp) => exp.id !== id))
+    dispatch({ type: "DELETE", payload: id })
   }
 
   const value = {
-    expenses: expenses,
-    addExpense: addExpense,
-    updateExpense: updateExpense,
-    deleteExpense: deleteExpense,
+    expenses: expensesState,
+    addExpense,
+    updateExpense,
+    deleteExpense,
   }
 
   return (

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import ExpensesList from "./ExpensesList"
 import ExpensesSummary from "./ExpensesSummary"
