@@ -1,5 +1,5 @@
 import { useContext, useLayoutEffect } from "react"
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet } from "react-native"
 import ExpenseForm from "../components/manageExpense/ExpenseForm"
 import IconButton from "../components/ui/IconButton"
 import { GlobalStyles } from "../constants/styles"
@@ -30,12 +30,12 @@ export default function ManageExpenseScreen({ route, navigation }) {
     navigation.goBack()
   }
 
-  function confirmHandler(expenseData) {
+  async function confirmHandler(expenseData) {
     if (isEditting) {
       updateExpense(editedExpenseId, expenseData)
     } else {
-      storeExpense(expenseData)
-      addExpense(expenseData)
+      const id = await storeExpense(expenseData)
+      addExpense({ ...expenseData, id })
     }
     navigation.goBack()
   }

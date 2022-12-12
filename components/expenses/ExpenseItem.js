@@ -17,6 +17,7 @@ export default function ExpenseItem({ id, description, date, amount }) {
     navigation.navigate("ManageExpense", { expenseId: item.id })
   }
 
+  console.log("date prop at expense item", date)
   return (
     <Pressable
       style={({ pressed }) => [pressed ? styles.pressed : null]}
@@ -26,6 +27,7 @@ export default function ExpenseItem({ id, description, date, amount }) {
         <View style={styles.leftItems}>
           <Text style={[styles.text, styles.description]}>{description}</Text>
           <Text style={styles.text}>{getFormattedDate(date)}</Text>
+          {/* <Text style={styles.text}>{date}</Text> */}
         </View>
         <View style={styles.amountContainer}>
           <Text style={styles.amount}>{amount.toFixed(2)}</Text>
