@@ -1,7 +1,6 @@
 import { useContext, useLayoutEffect } from "react"
 import { View, StyleSheet, Text } from "react-native"
 import ExpenseForm from "../components/manageExpense/ExpenseForm"
-import Button from "../components/ui/Button"
 import IconButton from "../components/ui/IconButton"
 import { GlobalStyles } from "../constants/styles"
 
@@ -21,26 +20,20 @@ export default function ManageExpenseScreen({ route, navigation }) {
     })
   }, [navigation, isEditting])
 
-  const expense = expenses.find((expense) => expense.id === editedExpenseId)
+  const selectedExpense = expenses.find(
+    (expense) => expense.id === editedExpenseId
+  )
 
   function deleteExpenseHandler() {
     deleteExpense(editedExpenseId)
     navigation.goBack()
   }
 
-  function confirmHandler() {
+  function confirmHandler(expenseData) {
     if (isEditting) {
-      updateExpense(editedExpenseId, {
-        description: "Test!!!",
-        amount: 19.98,
-        date: new Date("2022-12-09"),
-      })
+      updateExpense(editedExpenseId, expenseData)
     } else {
-      addExpense({
-        description: "Test Added",
-        amount: 19.98,
-        date: new Date("2022-12-10"),
-      })
+      addExpense(expenseData)
     }
     navigation.goBack()
   }
@@ -51,21 +44,16 @@ export default function ManageExpenseScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <ExpenseForm />
-
-      <View style={styles.buttonsContainer}>
-        <Button style={styles.button} mode="flat" onPress={cancelHandler}>
-          Cancel
-        </Button>
-        <Button style={styles.button} onPress={confirmHandler}>
-          {isEditting ? "Update" : "Add"}
-        </Button>
-      </View>
+      <ExpenseForm
+        submitButtonLabel={isEditting ? "Update" : "Add"}
+        onSubmit={confirmHandler}
+        onCancel={cancelHandler}
+        defaultValues={selectedExpense}
+      />
 
       {isEditting && (
         <View style={styles.deleteContainer}>
-          <Text style={expense.description}></Text>
-
+          {/* <Text style={expense.description}></Text> */}
           <IconButton
             icon="trash"
             size={36}
@@ -74,7 +62,6 @@ export default function ManageExpenseScreen({ route, navigation }) {
           />
         </View>
       )}
-      {/* <Text style={styles.text}>{expense.description}</Text> */}
     </View>
   )
 }
@@ -85,23 +72,11 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary800,
   },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8,
-  },
   deleteContainer: {
     marginTop: 16,
     paddingTop: 8,
     borderTopWidth: 2,
     borderTopColor: GlobalStyles.colors.primary200,
     alignItems: "center",
-  },
-  text: {
-    color: "white",
   },
 })
