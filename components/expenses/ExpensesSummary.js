@@ -25,11 +25,12 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   period: {
-    fontSize: 14,
+    fontSize: 18,
+    fontWeight: "bold",
     color: GlobalStyles.colors.primary400,
   },
   sum: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     color: GlobalStyles.colors.primary500,
   },

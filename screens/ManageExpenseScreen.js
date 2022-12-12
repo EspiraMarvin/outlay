@@ -1,18 +1,17 @@
-import { useLayoutEffect } from "react"
+import { useContext, useLayoutEffect } from "react"
 import { View, StyleSheet, Text } from "react-native"
 import Button from "../components/ui/Button"
 import IconButton from "../components/ui/IconButton"
 import { GlobalStyles } from "../constants/styles"
 
-import { EXPENSES } from "../data/expenses"
+import { ExpenseContext } from "../store/context/expenses-context"
 
 export default function ManageExpenseScreen({ route, navigation }) {
-  // console.log("navigation", navigation)
+  const { expenses, addExpense, updateExpense, deleteExpense } =
+    useContext(ExpenseContext)
 
   const editedExpenseId = route?.params?.expenseId
-  // console.log("editedExpenseId", editedExpenseId)
   const isEditting = !!editedExpenseId
-  // console.log("isEditting", isEditting)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -21,17 +20,33 @@ export default function ManageExpenseScreen({ route, navigation }) {
     })
   }, [navigation, isEditting])
 
-  const expense = EXPENSES.find((expense) => expense.id === editedExpenseId)
+  const expense = expenses.find((expense) => expense.id === editedExpenseId)
 
   function deleteExpenseHandler() {
-    console.log("hha")
+    deleteExpense(editedExpenseId)
+    navigation.goBack()
+  }
+
+  function confirmHandler() {
+    if (isEditting) {
+      updateExpense(editedExpenseId, {
+        description: "Test!!!",
+        amount: 19.98,
+        date: new Date("2022-12-09"),
+      })
+    } else {
+      addExpense({
+        description: "Test Added",
+        amount: 19.98,
+        date: new Date("2022-12-10"),
+      })
+    }
+    navigation.goBack()
   }
 
   function cancelHandler() {
     navigation.goBack()
   }
-
-  function AddHandler() {}
 
   return (
     <View style={styles.container}>
@@ -39,22 +54,24 @@ export default function ManageExpenseScreen({ route, navigation }) {
         <Button style={styles.button} mode="flat" onPress={cancelHandler}>
           Cancel
         </Button>
-        <Button style={styles.button} onPress={AddHandler}>
+        <Button style={styles.button} onPress={confirmHandler}>
           {isEditting ? "Update" : "Add"}
         </Button>
       </View>
 
       {isEditting && (
         <View style={styles.deleteContainer}>
+          <Text style={expense.description}></Text>
+
           <IconButton
             icon="trash"
             size={36}
             color={GlobalStyles.colors.error500}
-            onpress={deleteExpenseHandler}
+            onPress={deleteExpenseHandler}
           />
         </View>
       )}
-      <Text style={styles.text}></Text>
+      {/* <Text style={styles.text}>{expense.description}</Text> */}
     </View>
   )
 }
@@ -80,5 +97,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: GlobalStyles.colors.primary200,
     alignItems: "center",
+  },
+  text: {
+    color: "white",
   },
 })

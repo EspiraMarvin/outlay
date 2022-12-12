@@ -1,13 +1,9 @@
 import { View, StyleSheet, FlatList } from "react-native"
-import { useNavigation } from "@react-navigation/native"
 import { GlobalStyles } from "../../constants/styles"
 import ExpenseItem from "./ExpenseItem"
 
 export default function ExpensesList({ expenses }) {
-  const navigation = useNavigation()
-
   function renderExpenseItem(itemData) {
-    // const expense = itemData.item
     return <ExpenseItem {...itemData.item} />
   }
 

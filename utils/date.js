@@ -4,5 +4,5 @@ export function getFormattedDate(date) {
 
 // get date minus 7 days
 export function getDateMinusDays(date, days) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), -days)
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - days)
 }

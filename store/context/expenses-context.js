@@ -1,4 +1,4 @@
-import { createContext, useState, useReducer } from "react"
+import { createContext, useReducer } from "react"
 import { EXPENSES } from "../../data/expenses"
 
 export const ExpenseContext = createContext({
@@ -11,19 +11,31 @@ export const ExpenseContext = createContext({
 function expensesReducer(state, action) {
   switch (action.type) {
     case "ADD":
-      console.log("expenses data to add", action.payload.expenseData)
-      // return [action.payload.expenseData, ...expensesState]
-      return [{ ...action.payload }, state]
+      const id = Math.floor(Math.random() * 1000) // gen random id
+      return [{ ...action.payload, id: id }, ...state]
     case "UPDATE":
-      const updateExpenseIndex = state.findIndex(
+      // find index to update
+      const updatableExpenseIndex = state.findIndex(
         (expense) => expense.id === action.payload.id
-      ) // find index to update
-      const updatableExpense = state[updateExpenseIndex] // find item to update by index
+      )
+      const updatableExpense = state[updatableExpenseIndex] // find item to update by index
       const updatedItem = { ...updatableExpense, ...action.payload.data } // create new updated item
       const updatedExpenses = [...state]
-      updatableExpense[updateExpenseIndex] = updatedItem // update item
-      // const updatedExpenses = [...state]
+      updatedExpenses[updatableExpenseIndex] = updatedItem // update item
       return updatedExpenses
+
+    // same as above
+    /* state.map((expense) => {
+      if (expense.id === action.payload.id) {
+        const updatedItem = { id: expense.id, ...action.payload.data }
+        const updatedExpenses = [...state]
+        updatedExpenses[updatableExpenseIndex] = updatedItem // update item
+        state[updatableExpenseIndex] = updatedItem
+        return state
+      }
+    })
+    */
+
     case "DELETE":
       return state.filter((expense) => expense.id !== action.payload)
     default:
@@ -35,8 +47,6 @@ const ExpenseContextProvider = ({ children }) => {
   const [expensesState, dispatch] = useReducer(expensesReducer, EXPENSES)
 
   const addExpense = (expenseData) => {
-    const id = Math.floor(Math.random() * 100) // gen random id
-    expenseData.id = id
     dispatch({ type: "ADD", payload: expenseData })
   }
 

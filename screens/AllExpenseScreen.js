@@ -10,8 +10,9 @@ export default function AllExpenseScreen() {
 
   return (
     <ExpensesOutput
-      expensesPeriod="A summary of all your expenses"
+      expensesPeriod="Total"
       expenses={expenses}
+      fallbackText="No Expenses Yet!"
     />
   )
 }
