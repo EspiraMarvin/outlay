@@ -17,7 +17,6 @@ export default function ExpenseItem({ id, description, date, amount }) {
     navigation.navigate("ManageExpense", { expenseId: item.id })
   }
 
-  console.log("date prop at expense item", date)
   return (
     <Pressable
       style={({ pressed }) => [pressed ? styles.pressed : null]}

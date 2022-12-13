@@ -1,5 +1,4 @@
 export function getFormattedDate(date) {
-  console.log("date", date)
   return date.toISOString().slice(0, 10)
 }
 
